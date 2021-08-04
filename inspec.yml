@@ -1,4 +1,5 @@
-name: inspec_web_server
+name: webserver
+
 title: AWS InSpec Profile
 maintainer: The Authors
 copyright: The Authors
