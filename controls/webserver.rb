@@ -1,11 +1,44 @@
+input('tomcat_service', value: 'enable')
+input('tomcat_user', value: 'tomcat')
+input('tomcat_group', value: 'tomcat')
+input('catalina_home', value: '/opt/tomcat')
+input('tomcat_conf', value: '/opt/tomcat/conf')
+input('tomcat_libs', value: '/var/lib/tomcat')
+input('tomcat_logs', value: '/var/log/tomcat')
+input('tomcat_cache', value: '/var/cache/tomcat')
+input('logging_filehandler', value: 'FileHandler')
 
-# describe aws_ec2_instance('i-05eec675951a2c17b') do
-#   it { should be_running }
-# end
+control 'tomcat.dedicated_user' do
+  impact 1.0
+  tag 'ID: 3.10-5/2.1'
+  title 'The application server must run under a dedicated (operating-system) account that only has the permissions required for operation.'
+  describe user(input('tomcat_user')) do
+    it { should exist }
+  end
+  describe group(input('tomcat_group')) do
+    it { should exist }
+  end
+end
 
-# Add two control, 1 for AWS resources, 2nd for weserver (like tomcat port etc, service installed)
-
-
+control 'tomcat.dedicated_service' do
+  impact 1.0
+  tag 'ID: 3.10-5/2.1-1'
+  title 'If not containerized, the application service must be installed properly.'
+  describe service('tomcat') do
+    before do
+      skip if input('tomcat_service') == 'disable'
+    end
+    it { should be_installed }
+    it { should be_enabled }
+    it { should be_running }
+  end
+  describe processes('tomcat') do
+    before do
+      skip if input('tomcat_service') == 'disable'
+    end
+    its('users') { should eq [input('tomcat_user')] }
+  end
+end
 
 control 'webserver-01' do
   impact 0.7
