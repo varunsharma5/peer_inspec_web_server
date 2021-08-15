@@ -2,11 +2,7 @@ input('tomcat_service', value: 'enable')
 input('tomcat_user', value: 'tomcat')
 input('tomcat_group', value: 'tomcat')
 input('catalina_home', value: '/opt/tomcat')
-input('tomcat_conf', value: '/opt/tomcat/conf')
-input('tomcat_libs', value: '/var/lib/tomcat')
-input('tomcat_logs', value: '/var/log/tomcat')
-input('tomcat_cache', value: '/var/cache/tomcat')
-input('logging_filehandler', value: 'FileHandler')
+
 
 control 'tomcat.dedicated_user' do
   impact 1.0
