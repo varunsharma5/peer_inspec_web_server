@@ -9,7 +9,7 @@
 
 control 'webserver-01' do
   impact 0.7
-  title 'Tomcat releated compliance checks'
+  title 'Tomcat related compliance checks'
   desc 'Tomcat releated compliance checks'
   describe package('java-1.8.0-openjdk') do
     it { should be_installed }
